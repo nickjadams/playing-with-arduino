@@ -120,13 +120,23 @@ void allStop(){
 }
 
 void speedUp(){
-  currentSpeed += 10;
+  if (currentSpeed < 245){
+    currentSpeed += 10;
+  } else {
+    currentSpeed = 255;
+  }
+
   analogWrite(speedLeftPin, currentSpeed);
   analogWrite(speedRightPin, currentSpeed);
 }
 
 void slowDown(){
-  currentSpeed -= 10;
+  if (currentSpeed > 10) {
+    currentSpeed -= 10;
+  } else {
+    currentSpeed = 0;
+  }
+
   analogWrite(speedLeftPin, currentSpeed);
   analogWrite(speedRightPin, currentSpeed);
 }
