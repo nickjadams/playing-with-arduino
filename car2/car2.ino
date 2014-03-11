@@ -26,7 +26,11 @@ void setup() {
   pinMode(speedRightPin, OUTPUT);
   pinMode(controlThreeA, OUTPUT);
   pinMode(controlFourA, OUTPUT);
+
+  // Disable the motors on startup
+  allStop();
   
+  // reset the speed to maximum but dont start the motors.
   currentSpeed=255;
 }
 
