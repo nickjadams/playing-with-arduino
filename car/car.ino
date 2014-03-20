@@ -9,7 +9,13 @@
  * In this control system the two left motors and two right motors are 
  * controled together. This code therefore works equally well for both
  * two and four wheeled vehicles.
+ * 
+ * The code makes use of PciManager (https://code.google.com/p/arduino-pcimanager/)
+ * to handle interrupts.   
  */
+
+#include <PciManager.h>
+#include <PciListenerImp.h>
  
 // Pin assignments
 int led = 13;
@@ -19,9 +25,19 @@ int controlOneA = 4;
 int controlTwoA = 5;
 int controlThreeA = 7;
 int controlFourA = 8;
+int frontLeftBumper = 9; // Need to confirm pin
+int frontRightBumber = 10; // Need to confirm pin
+int rearLeftBumper = 11; // Need to confirm pin
+int rearRightBumber = 12; // Need to confirm pin
 
 // Global Variables
 int currentSpeed = 0;
+
+// Interrupts
+PciListenerImp frontLeftListener(frontLeftBumper, frontLeftHit);
+PciListenerImp frontRightListener(frontRightBumper, frontRightHit);
+PciListenerImp rearLeftListener(rearLeftBumper, rearLeftHit);
+PciListenerImp rearRightListener(rearRightBumper, rearRightHit)
 
 
 /*
@@ -47,7 +63,12 @@ void setup() {
   
   // reset the speed to maximum but dont start the motors.
   currentSpeed=255;
-}
+
+  // Configure the Interrupts
+  PciManager.registerListener(frontLeftBumper, &frontLeftListener);
+  PciManager.registerListener(frontRightBumber, &frontRightListener);
+  PciManager.registerListener(rearLeftBumber, &rearLeftListener);
+  PciManager.registerListener(rearRightBumper, &rearRightListener);
 
 /*
  * This is the main guts of the program, it will run this method over 
@@ -195,3 +216,36 @@ void slowDown(){
   analogWrite(speedLeftPin, currentSpeed);
   analogWrite(speedRightPin, currentSpeed);
 }
+
+/*
+ * An interrupt routine to handle a crash on the front left side of the 
+ * vehicle. 
+ */
+void frontLeftHit(byte changeKind) {
+  // Not yet implemented
+}
+
+/*
+ * An interrupt routine to handle a crash on the front right side of the
+ * vehicle.
+ */
+void frontRightHit(byte changeKind) {
+  // Not yet implemented
+}
+
+/*
+ * An interrupt routine to handle a crash on the rear left side of the
+ * vehicle.
+ */
+void rearLeftHit(byte changeKind) {
+  // Not yet implemented
+}
+
+/*
+ * An interrupt routine to handle a crash on the rear right side of the
+ * vehicle.
+ */
+void rearRightHit(byte changeKind) {
+  // Not yet implemented
+}
+
