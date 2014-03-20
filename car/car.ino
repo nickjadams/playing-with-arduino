@@ -37,7 +37,7 @@ int currentSpeed = 0;
 PciListenerImp frontLeftListener(frontLeftBumper, frontLeftHit);
 PciListenerImp frontRightListener(frontRightBumper, frontRightHit);
 PciListenerImp rearLeftListener(rearLeftBumper, rearLeftHit);
-PciListenerImp rearRightListener(rearRightBumper, rearRightHit)
+PciListenerImp rearRightListener(rearRightBumper, rearRightHit);
 
 
 /*
