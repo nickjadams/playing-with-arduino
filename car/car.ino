@@ -69,6 +69,7 @@ void setup() {
   PciManager.registerListener(frontRightBumber, &frontRightListener);
   PciManager.registerListener(rearLeftBumber, &rearLeftListener);
   PciManager.registerListener(rearRightBumper, &rearRightListener);
+}
 
 /*
  * This is the main guts of the program, it will run this method over 
