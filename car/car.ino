@@ -220,10 +220,22 @@ void slowDown(){
 
 /*
  * An interrupt routine to handle a crash on the front left side of the 
- * vehicle. 
+ * vehicle.
+ * If the vehicle hits front left then lets move to the right a bit and then continue forward 
  */
 void frontLeftHit(byte changeKind) {
-  // Not yet implemented
+  // Stop, reverse, spin right, forward, spin left, forward
+  allStop();
+  moveBackwards(255);
+  delay(1000));			// Check the duration of this
+  spinRight(255);
+  delay(200);			// Check the duration of this
+  moveForward(255);
+  delay(500);			// Check the duration of this
+  spinLeft(255);	
+  delay(200);			// Check the duration of this
+  moveForward(255);
+  // No delay, assume that if there is a front hit then the car was moving forward. 
 }
 
 /*
@@ -231,7 +243,19 @@ void frontLeftHit(byte changeKind) {
  * vehicle.
  */
 void frontRightHit(byte changeKind) {
-  // Not yet implemented
+  // Stop, reverse, spin left, forward, spin right, forward
+  allStop();
+  moveBackwards(255);
+  delay(1000));                 // Check the duration of this
+  spinLeft(255);
+  delay(200);                   // Check the duration of this
+  moveForward(255);
+  delay(500);                   // Check the duration of this
+  spinRight(255);
+  delay(200);                   // Check the duration of this
+  moveForward(255);
+  // No delay, assume that if there is a front hit then the car was moving forward.
+
 }
 
 /*
@@ -239,7 +263,18 @@ void frontRightHit(byte changeKind) {
  * vehicle.
  */
 void rearLeftHit(byte changeKind) {
-  // Not yet implemented
+  // Stop, forward, spin left, reverse, spin right, reverse
+  allStop();
+  moveForward(255);
+  delay(1000));                 // Check the duration of this
+  spinLeft(255);
+  delay(200);                   // Check the duration of this
+  moveBackwards(255);
+  delay(500);                   // Check the duration of this
+  spinRight(255);
+  delay(200);                   // Check the duration of this
+  moveBackwards(255);
+  // No delay, assume that if there is a rear hit then the car was moving backwards.
 }
 
 /*
@@ -247,6 +282,17 @@ void rearLeftHit(byte changeKind) {
  * vehicle.
  */
 void rearRightHit(byte changeKind) {
-  // Not yet implemented
+  // Stop, forward, spin right, reverse, spin left, reverse
+  allStop();
+  moveForward(255);
+  delay(1000));                 // Check the duration of this
+  spinRight(255);
+  delay(200);                   // Check the duration of this
+  moveBackwards(255);
+  delay(500);                   // Check the duration of this
+  spinLeft(255);
+  delay(200);                   // Check the duration of this
+  moveBackwards(255);
+  // No delay, assume that if there is a rear hit then the car was moving backwards.
 }
 
