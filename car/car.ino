@@ -32,6 +32,10 @@ int rearRightBumber = 12; // Need to confirm pin
 
 // Global Variables
 int currentSpeed = 0;
+bool frontLeft = false;
+bool frontRight = flase;
+bool rearLeft = false;
+bool rearRight = false;
 
 // Interrupts
 PciListenerImp frontLeftListener(frontLeftBumper, frontLeftHit);
@@ -93,6 +97,22 @@ void loop() {
   currentSpeed = 255;
 }
 
+void interruptAwareDelay(int milliseconds){
+  int i = millseconds / 10;
+  for (int j = 0;j < i;j++) { 
+  if (frontLeft){
+    handleFrontLeftHit();
+  } else if (frontRight){
+    handleFrontRightHit();
+  } else if (rearLeft){
+    handleRearLeftHit();
+  } else if (rearRight){
+    handleRearRightHit();
+  } else { 
+    delay(10);
+  }
+  }
+}
 
 /*
  * Move forward at the specified speed. If insurficient 
@@ -218,12 +238,11 @@ void slowDown(){
   analogWrite(speedRightPin, currentSpeed);
 }
 
-/*
- * An interrupt routine to handle a crash on the front left side of the 
- * vehicle.
- * If the vehicle hits front left then lets move to the right a bit and then continue forward 
- */
 void frontLeftHit(byte changeKind) {
+  frontLeft = true;
+}
+
+void handleFrontLeftHit(){
   // Stop, reverse, spin right, forward, spin left, forward
   allStop();
   moveBackwards(255);
@@ -236,13 +255,14 @@ void frontLeftHit(byte changeKind) {
   delay(200);			// Check the duration of this
   moveForward(255);
   // No delay, assume that if there is a front hit then the car was moving forward. 
+  frontLeft = fasle;
 }
 
-/*
- * An interrupt routine to handle a crash on the front right side of the
- * vehicle.
- */
 void frontRightHit(byte changeKind) {
+  frontRight = true;
+}
+
+void handleFrontRightHit(){
   // Stop, reverse, spin left, forward, spin right, forward
   allStop();
   moveBackwards(255);
@@ -255,14 +275,15 @@ void frontRightHit(byte changeKind) {
   delay(200);                   // Check the duration of this
   moveForward(255);
   // No delay, assume that if there is a front hit then the car was moving forward.
+  frontRight = false;
 
 }
 
-/*
- * An interrupt routine to handle a crash on the rear left side of the
- * vehicle.
- */
 void rearLeftHit(byte changeKind) {
+  rearLeft = true;
+}
+
+void handleRearLeftHit() {
   // Stop, forward, spin left, reverse, spin right, reverse
   allStop();
   moveForward(255);
@@ -275,13 +296,14 @@ void rearLeftHit(byte changeKind) {
   delay(200);                   // Check the duration of this
   moveBackwards(255);
   // No delay, assume that if there is a rear hit then the car was moving backwards.
+  rearLeft = false;
 }
 
-/*
- * An interrupt routine to handle a crash on the rear right side of the
- * vehicle.
- */
 void rearRightHit(byte changeKind) {
+  rearRight = true;
+}
+
+void handleRearRightHit(){
   // Stop, forward, spin right, reverse, spin left, reverse
   allStop();
   moveForward(255);
@@ -294,5 +316,6 @@ void rearRightHit(byte changeKind) {
   delay(200);                   // Check the duration of this
   moveBackwards(255);
   // No delay, assume that if there is a rear hit then the car was moving backwards.
+  rearRight=false;
 }
 
